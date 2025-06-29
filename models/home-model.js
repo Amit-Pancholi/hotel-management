@@ -1,0 +1,33 @@
+
+
+const {
+  default: mongoose
+} = require("mongoose");
+const favouriteModel = require("./favourite-model");
+
+const homeSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  location: {
+    type: String,
+    required: true
+  },
+  rating: {
+    type: Number,
+    required: true
+  },
+  imageUrl: String
+})
+
+homeSchema.pre('findOneAndDelete',async function(next){
+  const homeId = this.getQuery()._id;
+  await favouriteModel.deleteMany({homeId : homeId})
+  next();
+})
+module.exports = mongoose.model('Home',homeSchema);
