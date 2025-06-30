@@ -6,6 +6,7 @@ exports.getHomeAdd = (req, res, next) => {
     pageTitle: "Home Reg",
     currentPage: "Home Registration",
     editing: false,
+    isLoggedIn: req.session.isLoggedIn,
   });
 };
 
@@ -16,6 +17,7 @@ exports.getHostHomeList = (req, res, next) => {
       homeData: home,
       pageTitle: "Host Home",
       currentPage: "Host Home",
+      isLoggedIn: req.session.isLoggedIn,
     });
   });
 };
@@ -80,6 +82,7 @@ exports.getEditHome = (req, res, next) => {
       pageTitle: "Host Home",
       currentPage: "Host Home",
       editing: edit,
+      isLoggedIn: req.session.isLoggedIn,
     });
   })
 };

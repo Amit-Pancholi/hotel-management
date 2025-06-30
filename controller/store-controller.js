@@ -8,6 +8,7 @@ exports.getIndex = (req, res, next) => {
       homeData: home,
       pageTitle: "index",
       currentPage: "index",
+      isLoggedIn: req.session.isLoggedIn,
     }))
 };
 exports.getHome = (req, res, next) => {
@@ -18,6 +19,7 @@ exports.getHome = (req, res, next) => {
       homeData: home,
       pageTitle: "Home",
       currentPage: "Home List",
+      isLoggedIn: req.session.isLoggedIn,
     })
   })
 };
@@ -36,6 +38,7 @@ exports.getDetails = (req, res, next) => {
         home: home,
         pageTitle: "Details",
         currentPage: "Home List",
+        isLoggedIn: req.session.isLoggedIn,
       });
     }
   })
@@ -48,8 +51,9 @@ exports.getFavourite = (req, res, next) => {
       const favouriteHome = favourite.map(fav => fav.homeId)
       res.render("store/favourite-list", {
         favouriteHome: favouriteHome,
-        pageTitle: "Bookings",
+        pageTitle: "Favourites",
         currentPage: "Favourite List",
+        isLoggedIn: req.session.isLoggedIn,
       });
     }).catch(err => console.log('error in fetching favourite : ', err))
 
