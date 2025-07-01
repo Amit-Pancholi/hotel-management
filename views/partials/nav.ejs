@@ -1,64 +1,68 @@
 <nav class="backdrop-blur-md bg-white/60 top-0 w-full z-50">
   <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
     <!-- Brand / Page Title -->
-    <a href="/" class="text-2xl font-extrabold text-blue-700 drop-shadow-sm tracking-wide">
+    <a
+      href="/"
+      class="text-2xl font-extrabold text-blue-700 drop-shadow-sm tracking-wide">
       <%= currentPage %>
     </a>
 
     <!-- Navigation Links -->
     <div class="space-x-2 text-sm sm:text-base">
-      <% if (isLoggedIn) { %>
-        <a href="/home-list"
-          class="px-4 py-2 rounded-lg font-medium transition-all duration-200
-          <%= currentPage === 'Home List' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
-          Home List
-        </a>
-        <a href="/host/home-add"
-          class="px-4 py-2 rounded-lg font-medium transition-all duration-200
-          <%= currentPage === 'Home Registration' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
-          Add Home
-        </a>
-        <a href="/host/home-list"
-          class="px-4 py-2 rounded-lg font-medium transition-all duration-200
-          <%= currentPage === 'Host Home' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
-          Host Home
-        </a>
-        <a href="/home-booking"
-          class="px-4 py-2 rounded-lg font-medium transition-all duration-200
-          <%= currentPage === 'Booking' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
-          Booking
-        </a>
-        <a href="/favourites"
-          class="px-4 py-2 rounded-lg font-medium transition-all duration-200
-          <%= currentPage === 'Favourite List' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
-          Favourite
-        </a>
-      <% } %>
+      <% if (isLoggedIn) { %> <% if(user && user.userType == 'guest') {%>
+      <a
+        href="/home-list"
+        class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Home List' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
+        Home List
+      </a>
+      <a
+        href="/favourites"
+        class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Favourite List' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
+        Favourite
+      </a>
+      <a
+        href="/home-booking"
+        class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Booking' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
+        Booking
+      </a>
+      <% } else { %>
+      <a
+        href="/host/home-add"
+        class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Home Registration' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
+        Add Home
+      </a>
+      <a
+        href="/host/home-list"
+        class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Host Home' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
+        Host Home
+      </a>
+      <% } %> <% } %>
 
-      <a href="/contact-us"
-        class="px-4 py-2 rounded-lg font-medium transition-all duration-200
-        <%= currentPage === 'Contact Us' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
+      <a
+        href="/contact-us"
+        class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Contact Us' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
         Contact
       </a>
 
       <% if (!isLoggedIn) { %>
-        <a href="/login"
-          class="px-4 py-2 rounded-lg font-medium transition-all duration-200
-          <%= currentPage === 'Login' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
-          Login
-        </a>
-        <a href="/signup"
-          class="px-4 py-2 rounded-lg font-medium transition-all duration-200
-          <%= currentPage === 'Sign Up' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
-          Sign Up
-        </a>
+      <a
+        href="/login"
+        class="px-4 py-2 rounded-lg border-2 border-blue-500 font-medium transition-all duration-200 <%= currentPage === 'Login' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
+        Login
+      </a>
+      <a
+        href="/signup"
+        class="px-4 py-2 rounded-lg font-medium border-2 border-blue-500 transition-all duration-200 <%= currentPage === 'Sign Up' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
+        Sign Up
+      </a>
       <% } else { %>
-        <form action="/logout" method="post" class="inline">
-          <button type="submit"
-            class="px-4 py-2 rounded-lg font-medium text-gray-700 hover:bg-white/40 hover:text-red-600 transition-all duration-200">
-            Log Out
-          </button>
-        </form>
+      <form action="/logout" method="post" class="inline">
+        <button
+          type="submit"
+          class="px-4 py-2 rounded-lg font-medium border-2 border-blue-500 text-gray-700 hover:bg-white/40 hover:text-red-600 transition-all duration-200">
+          Log Out
+        </button>
+      </form>
       <% } %>
     </div>
   </div>

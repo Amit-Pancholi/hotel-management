@@ -1,0 +1,14 @@
+<% if (typeof errorMsg !== 'undefined' && errorMsg.length > 0) { %>
+<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative space-y-1" role="alert">
+    <strong class="font-bold">Error!</strong>
+    <ul class="list-disc list-inside text-sm mt-2 space-y-1">
+        <% if(Array.isArray(errorMsg)){ %>
+        <% errorMsg.forEach(function(msg) { %>
+        <li><%= msg %></li>
+        <% }); %>
+        <% }else{ %>
+        <li><%= errorMsg %></li>
+        <% } %>
+    </ul>
+</div>
+<% } %>
