@@ -92,3 +92,12 @@ exports.postRemoveToFavourite = (req, res, next) => {
     res.redirect("/favourites");
   })
 };
+
+exports.getContactUs = (req, res, next) => {
+  // console.log(req.body)
+  res.render("store/contact-us", {
+    pageTitle: "Contact Us",
+    currentPage: "Contact Us",
+    isLoggedIn: req.session.isLoggedIn,
+  })
+};

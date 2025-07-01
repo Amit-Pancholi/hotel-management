@@ -1,50 +1,42 @@
-<%- include('../partials/head')%>
+<%- include('../partials/head') %>
 </head>
 
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gradient-to-tr from-blue-100 via-white to-pink-100 text-gray-800 min-h-screen">
   <!-- 🌐 Navbar -->
-  <%- include('../partials/nav')%>
-  <section class="max-w-6xl mx-auto px-4 py-12 mt-16">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6">Favourite lists</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Example card -->
-      <% favouriteHome.forEach((home)=>{ %>
-      <div class="bg-white rounded-xl shadow p-5">
-        <h3 class="text-xl font-semibold text-gray-800">Modern Apartment</h3>
-        <img src="<%= home.imageUrl %> " alt="" srcset="" class="w-full h-1/2">
-        <div>
-          <p class="text-gray-500">
-            <%= home.name %>
-          </p>
-          <p class="text-gray-500">
-            <%= home.location %>
-          </p>
-          <div class="flex justify-between items-center w-full  gap-4 text-gray-500 mt-2">
-            <h4>
-              <b class="text-red-500"> Rs:</b> <span class="text-gray-500">
-                <%= home.price %>/day
-              </span>
-            </h4>
-            <p>
-              <span class="text-green-600 mt-0">Rating:</span><span class="text-gray-500 mt-0">
-                <%= home.rating %>
-              </span>
-            </p>
-          </div>
-          <div class="mt-5  flex items-center justify-center w-full">
-            <a href="/home-details/<%= home._id %> "
-              class="text-black-400 mr-6 px-3 py-2 rounded hover:bg-blue-500 bg-blue-300">Details</a>
-            <form action="/favourites-remove/<%= home._id %> " method="POST">
-              <button type="submit" class="bg-red-300 rounded p-2 hover:bg-red-500">Remove to Favourite</button>
-            </form>
-          </div>
+  <%- include('../partials/nav') %>
 
+  <section class="max-w-6xl mx-auto px-4 py-12 mt-20">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">⭐ Favourite Homes</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <% favouriteHome.forEach((home) => { %>
+      <div class="bg-white/40 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl p-6 hover:scale-[1.02] transition duration-300">
+        <h3 class="text-xl font-semibold text-blue-700 mb-2"><%= home.name %></h3>
+        <img src="<%= home.imageUrl %>" alt="<%= home.name %>" class="w-full h-48 object-cover rounded-xl shadow mb-4" />
+        
+        <div class="text-gray-600 space-y-1">
+          <p><span class="font-medium text-gray-700">Location:</span> <%= home.location %></p>
+          <p><span class="font-medium text-gray-700 text-red-500">Rs:</span> <%= home.price %>/day</p>
+          <p><span class="font-medium text-green-600">Rating:</span> <%= home.rating %></p>
         </div>
+
+        <div class="mt-6 flex justify-between items-center">
+          <a href="/home-details/<%= home._id %>"
+            class="bg-blue-300 text-white text-sm px-4 py-2 rounded-md hover:bg-blue-400 transition duration-200">
+            🔍 View Details
+          </a>
+        
+          <form action="/favourites-remove/<%= home._id %>" method="POST">
+            <button type="submit"
+              class="bg-red-300 text-white text-sm px-4 py-2 rounded-md hover:bg-red-400 transition duration-200">
+              ❌ Remove
+            </button>
+          </form>
+        </div>
+        
       </div>
       <% }) %>
-      <!-- Add more cards dynamically later -->
     </div>
   </section>
 </body>
-
 </html>

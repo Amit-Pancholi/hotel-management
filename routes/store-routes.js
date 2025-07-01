@@ -3,6 +3,7 @@ const storeController = require("../controller/store-controller");
 const storeRoute = express.Router();
 
 storeRoute.get("/", storeController.getIndex);
+storeRoute.get("/contact-us", storeController.getContactUs);
 storeRoute.get("/home-list", storeController.getHome);
 storeRoute.get("/home-details/:homeId", storeController.getDetails);
 // storeRoute.get("/home-booking", storeController.getBooking);
