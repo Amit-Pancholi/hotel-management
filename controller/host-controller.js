@@ -29,7 +29,7 @@ exports.postHomeAdd = (req, res, next) => {
     price,
     location,
     rating,
-    imageUrl
+    image
   } = req.body;
 
   const home = new Home({
@@ -37,7 +37,7 @@ exports.postHomeAdd = (req, res, next) => {
     price,
     location,
     rating,
-    imageUrl
+    image
   });
   home.save().then(() => res.redirect("/host/home-list"));
 };
@@ -49,14 +49,14 @@ exports.postEditHome = (req, res, next) => {
     price,
     location,
     rating,
-    imageUrl
+    image
   } = req.body;
   Home.findById(id).then((home) => {
     home.name = name;
     home.price = price;
     home.location = location;
     home.rating = rating;
-    home.imageUrl = imageUrl
+    home.image = image
     home.save().then(() => res.redirect("/host/home-list"));
   })
 };

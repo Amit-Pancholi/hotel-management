@@ -19,7 +19,7 @@ const homeSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  imageUrl: String
+  image: String
 })
 
 // homeSchema.pre('findOneAndDelete',async function(next){
