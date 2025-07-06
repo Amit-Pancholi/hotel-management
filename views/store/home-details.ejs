@@ -1,53 +1,68 @@
 <%- include('../partials/head') %>
 </head>
 
-<body class="bg-gradient-to-br from-blue-100 via-white to-pink-100 min-h-screen text-gray-800">
+<body class="bg-gradient-to-br from-blue-100 via-white to-pink-100 min-h-screen text-gray-800 font-sans">
   <%- include('../partials/nav') %>
 
-  <main class="container mx-auto px-4 py-12 mt-16">
-    <section class="bg-white/50 backdrop-blur-lg shadow-xl rounded-2xl p-8 max-w-6xl mx-auto">
-      <h2 class="text-4xl font-bold text-center text-red-500 mb-10">
-        Details of <%= home.name %>
+  <main class="container mx-auto px-4 py-16 mt-20">
+    <section class="bg-white/60 backdrop-blur-xl shadow-lg rounded-3xl p-8 max-w-5xl mx-auto">
+      <h2 class="text-4xl md:text-5xl font-extrabold text-center text-gray-900 mb-10 tracking-tight">
+        🏡 <%= home.name %>
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         <!-- Home Image -->
-        <div class="rounded-xl overflow-hidden shadow-lg">
-          <img src="<%= home.image %>" alt="<%= home.name %>" class="w-full h-96 object-cover" />
+        <div class="rounded-xl overflow-hidden shadow-md">
+          <img src="/<%= home.image %>" alt="<%= home.name %>" class="w-full h-64 object-cover" />
         </div>
 
         <!-- Home Info -->
-        <div class="space-y-6 text-gray-700">
-
+        <div class="space-y-6">
           <!-- Location -->
-          <div class="border-b pb-4">
-            <h3 class="text-2xl font-semibold mb-2">📍 Location</h3>
-            <p class="text-lg"><%= home.location %></p>
+          <div>
+            <h3 class="text-xl font-semibold text-gray-700">📍 Location</h3>
+            <p class="text-gray-600"><%= home.location %></p>
           </div>
 
           <!-- Price -->
-          <div class="border-b pb-4">
-            <h3 class="text-2xl font-semibold mb-2">💰 Price</h3>
+          <div>
+            <h3 class="text-xl font-semibold text-gray-700">💰 Price</h3>
             <p class="text-green-600 text-xl font-bold">Rs <%= home.price %> / night</p>
           </div>
 
           <!-- Rating -->
-          <div class="border-b pb-4">
-            <h3 class="text-2xl font-semibold mb-2">⭐ Rating</h3>
-            <div class="flex items-center">
-              <span class="text-yellow-400 text-2xl">★</span>
-              <span class="ml-2 text-lg"><%= home.rating %> / 5</span>
+          <div>
+            <h3 class="text-xl font-semibold text-gray-700">⭐ Rating</h3>
+            <div class="flex items-center text-gray-600">
+              <span class="text-yellow-400 text-xl">★</span>
+              <span class="ml-2"><%= home.rating %> / 5</span>
             </div>
           </div>
 
-          <!-- Favourite Button -->
-          <div class="pt-2">
-            <%- include('../partials/favourite') %>
+          <!-- Download Button -->
+          <div>
+            <a href="/guest/downloads/house-rules/<%= home._id %>.pdf"
+              class="inline-block bg-indigo-600 text-white text-sm font-medium px-5 py-2.5 rounded-lg shadow hover:bg-indigo-700 transition">
+              📄 Download House Rules
+            </a>
           </div>
-
+          <!-- Favourite Button -->
+          <div >
+            <%- include('../partials/favourite') %>
+            <!-- Book Now Button -->
+            <div>
+              <form action="/guest/home-booking/<%= home._id %>" method="POST">
+                <button type="submit"
+                  class="mt-4 inline-block bg-green-600 text-white text-sm font-medium px-5 py-2.5 rounded-lg shadow hover:bg-green-700 transition">
+                  🛏️ Book Now
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   </main>
 </body>
+
 </html>

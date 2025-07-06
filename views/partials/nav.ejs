@@ -2,7 +2,7 @@
   <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
     <!-- Brand / Page Title -->
     <a
-      href="/"
+      href="/<%= user.userType == 'guest' ? 'guest' : 'host/home-list'  %>"
       class="text-2xl font-extrabold text-blue-700 drop-shadow-sm tracking-wide">
       <%= currentPage %>
     </a>
@@ -11,17 +11,17 @@
     <div class="space-x-2 text-sm sm:text-base">
       <% if (isLoggedIn) { %> <% if(user && user.userType == 'guest') {%>
       <a
-        href="/home-list"
+        href="/guest/home-list"
         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Home List' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
         Home List
       </a>
       <a
-        href="/favourites"
+        href="/guest/favourites"
         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Favourite List' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
         Favourite
       </a>
       <a
-        href="/home-booking"
+        href="/guest/home-booking"
         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Booking' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
         Booking
       </a>
@@ -39,7 +39,7 @@
       <% } %> <% } %>
 
       <a
-        href="/contact-us"
+        href="/contact/contact-us"
         class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Contact Us' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
         Contact
       </a>

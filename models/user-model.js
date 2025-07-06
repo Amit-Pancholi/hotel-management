@@ -27,8 +27,13 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Home',
     required: true,
-    unique: true
+  }],
+  bookings: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Home',
+    required: true,
   }]
+
 })
 
 

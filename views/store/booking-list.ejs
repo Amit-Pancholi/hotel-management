@@ -1,0 +1,45 @@
+<%- include('../partials/head') %>
+</head>
+
+<body class="bg-gradient-to-tr from-green-100 via-white to-blue-100 text-gray-800 min-h-screen">
+  <!-- 🌐 Navbar -->
+  <%- include('../partials/nav') %>
+
+  <section class="max-w-6xl mx-auto px-4 py-12 mt-20">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">🛏️ Booked Homes</h2>
+
+    <% if (bookedHomes.length === 0) { %>
+      <p class="text-center text-gray-600 text-lg">You haven't booked any homes yet.</p>
+    <% } else { %>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <% bookedHomes.forEach((home) => { %>
+        <div class="bg-white/40 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl p-6 hover:scale-[1.02] transition duration-300">
+          <h3 class="text-xl font-semibold text-indigo-700 mb-2"><%= home.name %></h3>
+          <img src="/<%= home.image %>" alt="<%= home.name %>" class="w-full h-48 object-cover rounded-xl shadow mb-4" />
+          
+          <div class="text-gray-600 space-y-1">
+            <p><span class="font-medium text-gray-700">Location:</span> <%= home.location %></p>
+            <p><span class="font-medium text-red-500">Rs:</span> <%= home.price %>/day</p>
+            <p><span class="font-medium text-green-600">Rating:</span> <%= home.rating %></p>
+          </div>
+
+          <div class="mt-6 flex justify-between items-center">
+            <a href="/guest/home-details/<%= home._id %>"
+              class="bg-indigo-400 text-white text-sm px-4 py-2 rounded-md hover:bg-indigo-500 transition duration-200">
+              🔍 View Details
+            </a>
+
+            <form action="/guest/bookings-cancel/<%= home._id %>" method="POST">
+              <button type="submit"
+                class="bg-red-300 text-white text-sm px-4 py-2 rounded-md hover:bg-red-400 transition duration-200">
+                ❌ Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </section>
+</body>
+</html>

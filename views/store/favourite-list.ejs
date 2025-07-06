@@ -12,7 +12,7 @@
       <% favouriteHome.forEach((home) => { %>
       <div class="bg-white/40 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl p-6 hover:scale-[1.02] transition duration-300">
         <h3 class="text-xl font-semibold text-blue-700 mb-2"><%= home.name %></h3>
-        <img src="<%= home.image %>" alt="<%= home.name %>" class="w-full h-48 object-cover rounded-xl shadow mb-4" />
+        <img src="/<%= home.image %>" alt="<%= home.name %>" class="w-full h-48 object-cover rounded-xl shadow mb-4" />
         
         <div class="text-gray-600 space-y-1">
           <p><span class="font-medium text-gray-700">Location:</span> <%= home.location %></p>
@@ -21,12 +21,12 @@
         </div>
 
         <div class="mt-6 flex justify-between items-center">
-          <a href="/home-details/<%= home._id %>"
+          <a href="/guest/home-details/<%= home._id %>"
             class="bg-blue-300 text-white text-sm px-4 py-2 rounded-md hover:bg-blue-400 transition duration-200">
             🔍 View Details
           </a>
         
-          <form action="/favourites-remove/<%= home._id %>" method="POST">
+          <form action="/guest/favourites-remove/<%= home._id %>" method="POST">
             <button type="submit"
               class="bg-red-300 text-white text-sm px-4 py-2 rounded-md hover:bg-red-400 transition duration-200">
               ❌ Remove
