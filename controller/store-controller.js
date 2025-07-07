@@ -124,7 +124,7 @@ exports.getHomeBooking = async (req, res, next) => {
   res.render("store/booking-list", {
     bookedHomes: user.bookings,
     pageTitle: "Bookings",
-    currentPage: "booking",
+    currentPage: "Booking",
     isLoggedIn: req.session.isLoggedIn,
     user: req.session.user,
   });
