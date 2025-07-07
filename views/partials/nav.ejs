@@ -28,8 +28,8 @@
       <% } else { %>
       <a
         href="/host/home-add"
-        class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Home Registration' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
-        Add Home
+        class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Home Registration' || currentPage === 'Edit Home' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
+        <%= currentPage === 'Edit Home' ? 'Edit Home' : 'Home Reg' %> 
       </a>
       <a
         href="/host/home-list"

@@ -5,22 +5,27 @@ const {
 const homeSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   price: {
     type: Number,
-    required: true
+    required: true,
   },
   location: {
     type: String,
-    required: true
+    required: true,
   },
   rating: {
     type: Number,
-    required: true
+    required: true,
   },
-  image: String
-})
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  image: String,
+});
 
 // homeSchema.pre('findOneAndDelete',async function(next){
 //   const homeId = this.getQuery()._id;

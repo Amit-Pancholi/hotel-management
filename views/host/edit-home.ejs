@@ -7,7 +7,8 @@
   <div class="flex items-center justify-center min-h-[90vh]">
     <form action="/host/<%= editing ? 'edit-home' : 'home-list' %>" method="POST" enctype="multipart/form-data"
       class="w-full max-w-md bg-white/40 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-white/30">
-
+      <!-- Error Message -->
+      <%- include('../partials/error') %>
       <h1 class="text-3xl font-extrabold text-center text-blue-800 mb-6 tracking-wide drop-shadow-md">
         <%= editing ? 'Edit Home' : 'Add New Home' %>
       </h1>
@@ -23,30 +24,20 @@
       ]; %>
 
       <% fields.forEach(field => { %>
-        <label class="block mb-4">
-          <span class="text-gray-800 font-semibold"><%= field.label %></span>
-          <input
-            type="text"
-            name="<%= field.name %>"
-            value="<%= editing ? home[field.name] : '' %>"
-            required
-            class="mt-1 block w-full px-4 py-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition duration-200 bg-white/70"
-          />
-        </label>
+      <label class="block mb-4">
+        <span class="text-gray-800 font-semibold"><%= field.label %></span>
+        <input type="text" name="<%= field.name %>" value="<%= editing ? home[field.name] : (home[field.name]? home[field.name] :'') %>" required
+          class="mt-1 block w-full px-4 py-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition duration-200 bg-white/70" />
+      </label>
       <% }); %>
 
       <!-- Image File Picker -->
       <label class="block mb-4">
         <span class="text-gray-800 font-semibold">Home Image</span>
-        <input
-          type="file"
-          name="image"
-          accept="image/*"
-          class="mt-1 block w-full px-4 py-2 text-sm file:mr-4 file:py-2 file:px-4
+        <input type="file" name="image" accept="image/*" class="mt-1 block w-full px-4 py-2 text-sm file:mr-4 file:py-2 file:px-4
                  file:rounded-full file:border-0 file:text-sm file:font-semibold
                  file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100
-                 transition duration-200 bg-white/70 border border-gray-300 rounded-lg shadow-sm"
-        />
+                 transition duration-200 bg-white/70 border border-gray-300 rounded-lg shadow-sm" />
       </label>
 
       <!-- Submit Button -->
@@ -57,4 +48,5 @@
     </form>
   </div>
 </body>
+
 </html>

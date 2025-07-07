@@ -89,7 +89,6 @@ exports.postRemoveToFavourite = async (req, res, next) => {
   }
 };
 
-
 exports.getHouseRules = [
   (req, res, next) => {
     if (!req.session.isLoggedIn) {
