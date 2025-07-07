@@ -17,7 +17,7 @@ const { authRoute } = require("./routes/auth-routes");
 const contactUsRoute = require("./routes/contactUs-routes");
 
 const PORT = process.env.PORT || 3000;
-const mongoUrl = process.env.MONGO_URL || "mongodb://localhost:27017/airbnb";
+const mongoUrl = process.env.MONGO_URL || 'mongodb+srv://testuser:Aq12345@cluster0.tveeyja.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 
 const app = express();
 
