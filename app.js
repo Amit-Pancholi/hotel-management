@@ -97,6 +97,10 @@ function isHost(req, res, next) {
   // console.log('from isHost',req.session.user);
   return res.redirect("/sign-up"); // or send 403
 }
+
+
+
+
 app.use(authRoute);
 app.use('/guest',isAuthenticated, isGuest, storeRoute);
 app.use('/contact',isAuthenticated, contactUsRoute);
@@ -112,7 +116,7 @@ app.use("/host", isAuthenticated, isHost, hostRoute);
 // });
 
 
-app.use(error404);
+app.use(isAuthenticated,error404);
 
 mongoose
   .connect(mongoUrl)
