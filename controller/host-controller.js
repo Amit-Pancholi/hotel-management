@@ -53,7 +53,7 @@ exports.postHomeAdd = [
     .trim()
     .notEmpty()
     .withMessage("Please enter a rating")
-    .matches(/^[0-5]$/)
+    .isFloat({ min: 0, max: 5 })
     .withMessage("Please enter a valid rating between 0-5"),
   (req, res, next) => {
     const errors = validationResult(req);
