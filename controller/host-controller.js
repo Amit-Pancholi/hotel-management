@@ -47,7 +47,7 @@ exports.postHomeAdd = [
     .isLength({
       min: 2,
     })
-    .matches(/^[a-zA-Z\s]+$/)
+    .matches(/^[a-zA-Z0-9\s,.-]+$/)
     .withMessage("Please enter a valid location"),
   check("rating")
     .trim()
@@ -58,7 +58,7 @@ exports.postHomeAdd = [
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log(errors)
+      console.log(errors);
       const { name, price, location, rating } = req.body;
       return res.status(422).render("host/edit-home", {
         pageTitle: "Home Reg",
@@ -113,19 +113,24 @@ exports.postEditHome = [
     .withMessage("Please enter a price")
     .matches(/^[0-9]+$/)
     .withMessage("Please enter a valid price"),
+
   check("location")
     .trim()
     .notEmpty()
     .withMessage("Please enter a location")
     .isLength({
       min: 2,
-    }),
+    })
+    .matches(/^[a-zA-Z0-9\s,.-]+$/)
+    .withMessage("Please enter a valid location"),
+
   check("rating")
     .trim()
     .notEmpty()
     .withMessage("Please enter a rating")
-    .matches(/^[0-5]$/)
+    .isFloat({ min: 0, max: 5 })
     .withMessage("Please enter a valid rating"),
+
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
