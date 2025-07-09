@@ -6,7 +6,7 @@ const express = require("express");
 const session = require("express-session");
 const mongoDBStore = require("connect-mongodb-session")(session);
 const { default: mongoose } = require("mongoose");
-const multer = require("multer");
+
 
 // local module
 const rootDir = require("./utils/path-utils");
@@ -16,10 +16,14 @@ const { error404 } = require("./controller/error-controller");
 const { authRoute } = require("./routes/auth-routes");
 const contactUsRoute = require("./routes/contactUs-routes");
 
-const PORT =  3000;
-const mongoUrl = 'mongodb+srv://testuser:Aq12345@cluster0.tveeyja.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+const PORT = process.env.PORT || 3000;
+const mongoUrl = process.env.MONGO_URL || 'mongodb+srv://testuser:Aq12345@cluster0.tveeyja.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 
 const app = express();
+// app.use((err, req, res, next) => {
+//   console.error("🔥 Global Error:", err);
+//   res.status(500).send("Something went wrong");
+// });
 
 
 
@@ -28,37 +32,17 @@ const store = new mongoDBStore({
   collection: "session",
 });
 
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(rootDir, "public")));
 app.use(express.static(path.join(rootDir, "uploads")));
 app.use(express.static(path.join(rootDir, "Rules")))
 app.set("view engine", "ejs");
 app.set("views", "views");
 
-const fileFilter = (req, file, cb) => {
-  if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jpeg"
-  ) {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
-const fileStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./uploads/houseImages");
-  },
-  filename: (req, file, cb) => {
-    cb(null, new Date().toISOString() + "-" + file.originalname);
-  },
-});
 
 
-app.use(
-  multer({ storage: fileStorage, fileFilter: fileFilter }).single("image")
-);
+
+
 
 app.use(
   session({

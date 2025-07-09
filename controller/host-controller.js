@@ -24,6 +24,7 @@ exports.getHostHomeList = (req, res, next) => {
     });
   });
 };
+
 exports.postHomeAdd = [
   check("name")
     .trim()
@@ -83,7 +84,9 @@ exports.postHomeAdd = [
     if (!req.file) {
       return res.status(422).send("no such file exists");
     }
-    const image = "houseImages/" + req.file.filename;
+    console.log(req.file);
+    console.log(req.body);
+    const image = req.file.path;
     const home = new Home({
       name,
       price,
@@ -163,7 +166,7 @@ exports.postEditHome = [
       home.rating = rating;
 
       if (req.file) {
-        home.image = "houseImages/" + req.file.filename;
+        home.image = req.file.path;
       }
 
       home.save().then(() => res.redirect("/host/home-list"));
