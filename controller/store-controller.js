@@ -2,6 +2,9 @@ const path = require("path");
 const rootDir = require("../utils/path-utils");
 const Home = require("../models/home-model");
 const User = require("../models/user-model");
+const { check, validationResult } = require("express-validator");
+const Booking = require("../models/booking-models");
+
 exports.getIndex = (req, res, next) => {
   // console.log(req.body)
   Home.find().then((home) =>
@@ -102,30 +105,134 @@ exports.getHouseRules = [
     res.download(filePath, "rules.txt");
   },
 ];
-
-exports.postHmoeBooking = async (req, res, next) => {
+exports.postHomeBooking = async (req, res, next) => {
   const homeId = req.params.homeId;
-  const userId = req.session.user._id;
-  const user = await User.findById(userId);
-
-  if (!user.bookings.includes(homeId)) {
-    user.bookings.push(homeId);
-    await user.save();
-    res.redirect("/guest/home-list");
-  } else {
-    res.redirect("/guest/home-booking");
-  }
+  const home = await Home.findById(homeId);
+  res.render("store/book-home", {
+    pageTitle: "Bookings",
+    currentPage: "Booking",
+    isLoggedIn: req.session.isLoggedIn,
+    user: req.session.user,
+    home,
+    total: 0,
+  });
 };
+exports.postHomeBookingConfirmaton = [
+  check("guestName")
+    .trim()
+    .notEmpty()
+    .withMessage("Please enter a name")
+    .isLength({
+      min: 2,
+    })
+    .matches(/^[a-zA-Z\s]+$/)
+    .withMessage("Please enter a valid name"),
+  check("guestEmail")
+    .isEmail()
+    .withMessage("Please enter a valid email")
+    .normalizeEmail(),
+  check("guestPhone")
+    .trim()
+    .notEmpty()
+    .withMessage("Please enter a phone number")
+    .isLength({
+      min: 10,
+      max: 10,
+    })
+    .matches(/^[0-9]+$/)
+    .withMessage("Please enter a valid phone number"),
+  check("checkIn")
+    .trim()
+    .notEmpty()
+    .withMessage("Please enter a check-in date")
+    .isDate()
+    .withMessage("Please enter a valid check-in date"),
+  check("checkOut")
+    .trim()
+    .notEmpty()
+    .withMessage("Please enter a check-out date")
+    .isDate()
+    .withMessage("Please enter a valid check-out date"),
+
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      // console.log(errors);
+
+      const homeId = req.params.homeId;
+      const home = await Home.findById(homeId);
+      const user = req.session.user;
+      user.phone = req.body.guestPhone;
+      return res.status(422).render("store/book-home", {
+        pageTitle: "Bookings",
+        currentPage: "Booking",
+        isLoggedIn: req.session.isLoggedIn,
+        user,
+        errorMsg: errors.array().map((err) => err.msg),
+        home,
+        total: req.body.total,
+      });
+    }
+    next();
+  },
+  async (req, res, next) => {
+    const homeId = req.params.homeId;
+    const {
+      guestName,
+      guestEmail,
+      guestPhone,
+      checkIn,
+      checkOut,
+      price,
+      total,
+    } = req.body;
+    const existing = await Booking.exists({ homeName: homeId });
+    if (!existing) {
+      const booking = new Booking({
+        guestName,
+        guestEmail,
+        guestPhone,
+        homeName: homeId,
+        checkIn,
+        checkOut,
+        price,
+        total,
+      });
+      await booking.save();
+      next();
+    } else {
+      res.redirect("/guest/home-booking");
+    }
+  },
+  async (req, res, next) => {
+    const homeId = req.params.homeId;
+    const userId = req.session.user._id;
+    const user = await User.findById(userId);
+
+    if (!user.bookings.includes(homeId)) {
+      user.bookings.push(homeId);
+      await user.save();
+      res.redirect("/guest/home-list");
+    } else {
+      res.redirect("/guest/home-booking");
+    }
+  },
+];
 
 exports.getHomeBooking = async (req, res, next) => {
   const userId = req.session.user._id;
   const user = await User.findById(userId).populate("bookings");
+  const bookings = await Booking.find({
+    guestEmail: req.session.user.email,
+  }).populate("homeName");
+
   res.render("store/booking-list", {
     bookedHomes: user.bookings,
     pageTitle: "Bookings",
     currentPage: "Booking",
     isLoggedIn: req.session.isLoggedIn,
     user: req.session.user,
+    bookedHomes: bookings,
   });
 };
 
@@ -137,6 +244,11 @@ exports.postBookingsCancel = async (req, res, next) => {
   if (user.bookings.includes(homeId)) {
     user.bookings.pull(homeId);
     await user.save();
+    Booking.findByIdAndDelete(homeId).then((err) => {
+      if (err) {
+        console.log("error occer in remove home : ", err);
+      }
+    });
     res.redirect("/guest/home-booking");
   } else {
     res.redirect("/guest/home-booking");

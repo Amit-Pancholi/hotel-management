@@ -6,35 +6,41 @@
   <%- include('../partials/nav') %>
 
   <section class="max-w-6xl mx-auto px-4 py-12 mt-20">
-    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">🛏️ Booked Homes</h2>
+    <h2 class="text-3xl font-extrabold text-center text-indigo-800 mb-10 tracking-tight drop-shadow-sm">🛏️ Your Bookings</h2>
 
     <% if (bookedHomes.length === 0) { %>
       <p class="text-center text-gray-600 text-lg">You haven't booked any homes yet.</p>
     <% } else { %>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <% bookedHomes.forEach((home) => { %>
-        <div class="bg-white/40 backdrop-blur-lg border border-white/30 rounded-2xl shadow-xl p-6 hover:scale-[1.02] transition duration-300">
-          <h3 class="text-xl font-semibold text-indigo-700 mb-2"><%= home.name %></h3>
-          <img src="<%= home.image %>" alt="<%= home.name %>" class="w-full h-48 object-cover rounded-xl shadow mb-4" />
-          
-          <div class="text-gray-600 space-y-1">
-            <p><span class="font-medium text-gray-700">Location:</span> <%= home.location %></p>
-            <p><span class="font-medium text-red-500">Rs:</span> <%= home.price %>/day</p>
-            <p><span class="font-medium text-green-600">Rating:</span> <%= home.rating %></p>
-          </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+        <% bookedHomes.forEach((booking) => { 
+             const home = booking.homeName;
+        %>
+        <div class="bg-white/70 backdrop-blur-md border border-gray-200 rounded-2xl shadow-md overflow-hidden transform transition-all hover:scale-[1.02] duration-300">
+          <img src="<%= home.image %>" alt="<%= home.name %>" class="w-full h-48 object-cover">
 
-          <div class="mt-6 flex justify-between items-center">
-            <a href="/guest/home-details/<%= home._id %>"
-              class="bg-indigo-400 text-white text-sm px-4 py-2 rounded-md hover:bg-indigo-500 transition duration-200">
-              🔍 View Details
-            </a>
+          <div class="p-6 space-y-3">
+            <h3 class="text-xl font-bold text-indigo-700"><%= home.name %></h3>
+            <p class="text-sm text-gray-500 italic">Booked by: <%= booking.guestName %></p>
 
-            <form action="/guest/bookings-cancel/<%= home._id %>" method="POST">
-              <button type="submit"
-                class="bg-red-300 text-white text-sm px-4 py-2 rounded-md hover:bg-red-400 transition duration-200">
-                ❌ Cancel
-              </button>
-            </form>
+            <div class="text-sm text-gray-700 space-y-1">
+              <p><span class="font-semibold">Location:</span> <%= home.location %></p>
+              <p><span class="font-semibold">Price:</span> ₹<%= booking.price %>/day</p>
+              <p><span class="font-semibold">Total:</span> ₹<%= booking.total %></p>
+              <p><span class="font-semibold">Rating:</span> <%= home.rating %></p>
+              <p><span class="font-semibold">Check-In:</span> <%= new Date(booking.checkIn).toDateString() %></p>
+              <p><span class="font-semibold">Check-Out:</span> <%= new Date(booking.checkOut).toDateString() %></p>
+            </div>
+
+            <div class="mt-4 flex justify-between items-center">
+
+
+              <form action="/guest/bookings-cancel/<%= booking._id %>" method="POST">
+                <button type="submit"
+                  class="bg-red-400 text-white text-xs px-4 py-2 rounded-md hover:bg-red-500 transition">
+                  ❌ Cancel
+                </button>
+              </form>
+            </div>
           </div>
         </div>
         <% }) %>

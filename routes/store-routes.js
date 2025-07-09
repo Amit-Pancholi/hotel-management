@@ -14,7 +14,8 @@ storeRoute.post(
 );
 storeRoute.get("/downloads/house-rules/:homeId", storeController.getHouseRules);
 storeRoute.get("/home-booking", storeController.getHomeBooking);
-storeRoute.post("/home-booking/:homeId", storeController.postHmoeBooking);
+storeRoute.post("/home-booking/:homeId", storeController.postHomeBooking);
+storeRoute.post("/home-booking-confirmation/:homeId", storeController.postHomeBookingConfirmaton);
 storeRoute.post("/bookings-cancel/:homeId", storeController.postBookingsCancel);
 // storeRoute.get("/contact-us", storeController.getContactUs);
 

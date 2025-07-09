@@ -1,0 +1,85 @@
+<%- include('../partials/head') %>
+</head>
+
+<body class="bg-gradient-to-br from-blue-100 to-indigo-100 min-h-screen">
+  <!-- 🌐 Navbar -->
+  <%- include('../partials/nav') %>
+  <div class="flex items-center justify-center min-h-[90vh]">
+    <form action="/guest/home-booking-confirmation/<%= home._id %>" method="POST"
+      class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-lg space-y-6" oninput="calculateTotal()">
+      <!-- Error Message -->
+      <%- include('../partials/error') %>
+      <h1 class="text-3xl font-bold text-center text-indigo-700">Book Your Stay</h1>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Guest Name</label>
+        <input type="text" name="guestName" required value="<%= user.firstName + ' ' + user.lastName %>"
+          class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Guest Email</label>
+        <input type="email" name="guestEmail" required value="<%= user.email %>""
+          class=" mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Guest Phone</label>
+        <input type="tel" name="guestPhone" required value="<%= user.phone? user.phone : '' %>"
+          class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Check-in Date</label>
+        <input type="date" name="checkIn" id="checkIn" required
+          class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Check-out Date</label>
+        <input type="date" name="checkOut" id="checkOut" required
+          class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Price (per night)</label>
+        <input type="number" name="price" id="price" required min="0" value="<%= home.price %>" readonly
+          class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Total (calculated)</label>
+        <input type="number" name="total" id="total" readonly value="<%= total? total : '' %>"
+          class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm bg-gray-100 text-gray-700">
+      </div>
+
+      <!-- Hidden or select dropdown for home -->
+      <!-- Option 1: Hidden if you already know homeId -->
+      <input type="hidden" name="homeName" value="<%= home._id %>">
+
+
+
+      <button type="submit"
+        class="w-full py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition">
+        Book Now
+      </button>
+    </form>
+  </div>
+
+
+  <script>
+    function calculateTotal() {
+      const price = parseFloat(document.getElementById("price").value) || 0;
+      const checkIn = new Date(document.getElementById("checkIn").value);
+      const checkOut = new Date(document.getElementById("checkOut").value);
+
+      const diff = (checkOut - checkIn) / (1000 * 60 * 60 * 24); // days
+      const total = (diff > 0) ? price * diff : 0;
+
+      document.getElementById("total").value = total.toFixed(2);
+    }
+  </script>
+
+</body>
+
+</html>
