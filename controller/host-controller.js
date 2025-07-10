@@ -1,5 +1,6 @@
 const { check, validationResult } = require("express-validator");
 const Home = require("../models/home-model");
+const Booking = require('../models/booking-models'); // adjust path if needed  
 
 exports.getHomeAdd = (req, res, next) => {
   res.render("host/edit-home", {
@@ -202,3 +203,23 @@ exports.getEditHome = (req, res, next) => {
     });
   });
 };
+exports.getHomeBooking = async(req, res, next) => {
+  const userId = req.session.user._id; // Or passed as a route param/query
+
+  const bookings = await Booking.find({})
+    .populate({
+      path: "homeName",
+      match: { owner: userId }, // 💡 only populate homes that match this owner
+    })
+    .exec();
+    //  for case  homename is null or other remove that
+    console.log(bookings);
+    const filteredBookings = bookings.filter((b) => b.homeName);
+    res.render("host/host-home-booking", {
+      bookings: filteredBookings,
+      pageTitle: "Bookings",
+      currentPage: "Booking",
+      isLoggedIn: req.session.isLoggedIn,
+      user: req.session.user,
+    });
+}

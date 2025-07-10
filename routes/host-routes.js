@@ -11,6 +11,7 @@ hostRoute.post("/edit-home", upload, hostController.postEditHome);
 hostRoute.get("/home-list", hostController.getHostHomeList);
 hostRoute.post("/home-list", upload, hostController.postHomeAdd);
 hostRoute.post("/remove-home/:homeId", hostController.postRemoveHome);
+hostRoute.get('/home-booking',hostController.getHomeBooking)
 
 
 exports.hostRoute = hostRoute;

@@ -155,24 +155,58 @@ exports.postHomeBookingConfirmaton = [
     .withMessage("Please enter a valid check-out date"),
 
   async (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      // console.log(errors);
+    let errors = validationResult(req);
+    const total = Number(req.body.total); // ensure it's a number
+    const checkIn = req.body.checkIn;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // ⏰ Normalize to 00:00
 
+    const checkInDate = new Date(checkIn);
+    checkInDate.setHours(0, 0, 0, 0); // Remove time part
+
+    // Custom error: check-in must not be in the past
+    if (checkInDate < today) {
+      const customError = {
+        msg: "❌ Check-in date cannot be in the past",
+        param: "checkIn",
+        location: "body",
+      };
+      errors = {
+        ...errors,
+        errors: [...errors.array(), customError],
+      };
+    }
+    // Manually add custom error if total is invalid
+    if (total <= 0) {
+      const customError = {
+        msg: "❌ Invalid booking dates selected",
+        param: "total",
+        location: "body",
+      };
+      // Convert to array, add custom error, then re-wrap
+      errors = {
+        ...errors,
+        errors: [...errors.array(), customError],
+      };
+    }
+
+    if (errors.errors.length > 0) {
       const homeId = req.params.homeId;
       const home = await Home.findById(homeId);
       const user = req.session.user;
       user.phone = req.body.guestPhone;
+
       return res.status(422).render("store/book-home", {
         pageTitle: "Bookings",
         currentPage: "Booking",
         isLoggedIn: req.session.isLoggedIn,
         user,
-        errorMsg: errors.array().map((err) => err.msg),
+        errorMsg: errors.errors.map((err) => err.msg),
         home,
         total: req.body.total,
       });
     }
+
     next();
   },
   async (req, res, next) => {
