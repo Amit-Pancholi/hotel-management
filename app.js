@@ -15,6 +15,7 @@ const { hostRoute } = require("./routes/host-routes");
 const { error404 } = require("./controller/error-controller");
 const { authRoute } = require("./routes/auth-routes");
 const contactUsRoute = require("./routes/contactUs-routes");
+const Home = require("./models/home-model");
 
 const PORT = process.env.PORT || 3000;
 const mongoUrl = process.env.MONGO_URL || 'mongodb+srv://testuser:Aq12345@cluster0.tveeyja.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
@@ -83,7 +84,18 @@ function isHost(req, res, next) {
 }
 
 
-
+app.get('/',(req, res, next) => {
+  // console.log(req.body)
+  Home.find().then((home) =>
+    res.render("store/index", {
+      homeData: home,
+      pageTitle: "index",
+      currentPage: "index",
+      isLoggedIn: req.session.isLoggedIn,
+      user:{},
+    })
+  );
+})
 
 app.use(authRoute);
 app.use('/guest',isAuthenticated, isGuest, storeRoute);

@@ -16,7 +16,7 @@ exports.getIndex = (req, res, next) => {
       user: req.session.user,
     })
   );
-};
+}
 exports.getHome = (req, res, next) => {
   // console.log(req.body)
   Home.find({isDeleted:false}).then((home) => {
