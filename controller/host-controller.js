@@ -14,7 +14,7 @@ exports.getHomeAdd = (req, res, next) => {
 };
 
 exports.getHostHomeList = (req, res, next) => {
-  Home.find({ owner: req.session.user._id}).then((home) => {
+  Home.find({ owner: req.session.user._id, isDeleted: false }).then((home) => {
     // console.log(home)
     res.render("host/host-home-list", {
       homeData: home,
@@ -177,8 +177,8 @@ exports.postEditHome = [
 exports.postRemoveHome = (req, res, next) => {
   const homeId = req.params.homeId;
 
-  console.log("find home : ", homeId);
-  Home.findByIdAndDelete(homeId).then((err) => {
+  
+  Home.findByIdAndUpdate(homeId,{isDeleted:true}).then((err) => {
     if (err) {
       console.log("error occer in remove home : ", err);
     }

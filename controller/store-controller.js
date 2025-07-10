@@ -19,7 +19,7 @@ exports.getIndex = (req, res, next) => {
 };
 exports.getHome = (req, res, next) => {
   // console.log(req.body)
-  Home.find().then((home) => {
+  Home.find({isDeleted:false}).then((home) => {
     // console.log(home)
     res.render("store/home-list", {
       homeData: home,
