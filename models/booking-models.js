@@ -1,6 +1,5 @@
 const { mongoose } = require("mongoose");
 
-
 const bookingSchema = new mongoose.Schema({
   guestName: {
     type: String,
@@ -35,20 +34,14 @@ const bookingSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  deleteAt: {
-    type: Date,
-  },
 });
 
-// 🧠 Hook to set deleteAt = checkOut if not manually set
-bookingSchema.pre("save", function (next) {
-  if (!this.deleteAt && this.checkOut) {
-    const checkoutDate = new Date(this.checkOut);
-    checkoutDate.setHours(23, 59, 59, 999); // ⏰ Set to 23:59:59.999
-    this.deleteAt = checkoutDate;
-  }
-  next();
+//  for check booking is complete or not 
+bookingSchema.virtual("isCompleted").get(function () {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return this.checkOut < today;
 });
-  
+
 
 module.exports = mongoose.model("Booking", bookingSchema);

@@ -28,7 +28,7 @@ const storage = new CloudinaryStorage({
   
 
 const upload = multer({ storage }).single("image");
-console.log("✅ Multer + Cloudinary upload middleware ready.");
+// console.log("✅ Multer + Cloudinary upload middleware ready.");
 
 
 exports.upload = upload;

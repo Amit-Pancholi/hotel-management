@@ -1,5 +1,6 @@
 <%- include('../partials/head') %>
 </head>
+
 <body class="bg-gradient-to-br from-indigo-100 via-white to-green-100 text-gray-800 min-h-screen">
   <!-- Navbar -->
   <%- include('../partials/nav') %>
@@ -10,14 +11,15 @@
     </h2>
 
     <% if (bookings.length === 0) { %>
-      <p class="text-center text-gray-500 text-lg">No bookings found.</p>
+    <p class="text-center text-gray-500 text-lg">No bookings found.</p>
     <% } else { %>
-      <div class="space-y-10">
-        <% bookings.forEach((booking) => { const home = booking.homeName; %>
-        <div class="rounded-2xl shadow-xl overflow-hidden transform transition duration-300 hover:scale-[1.01] bg-white/60 backdrop-blur-lg border border-white/30">
-          
-          <!-- Minimal image-style banner -->
-          <div class="bg-gradient-to-r from-green-100 via-emerald-100 to-violet-100 text-white p-6 sm:p-8">
+    <div class="space-y-10">
+      <% bookings.forEach((booking) => { const home = booking.homeName; %>
+      <div
+        class="rounded-2xl shadow-xl overflow-hidden transform transition duration-300 hover:scale-[1.01] bg-white/60 backdrop-blur-lg border border-white/30">
+
+        <!-- Minimal image-style banner -->
+        <div class="bg-gradient-to-r from-green-100 via-emerald-100 to-violet-100 text-white p-6 sm:p-8">
 
           <!-- Card Content -->
           <div class="p-6 sm:p-8">
@@ -28,7 +30,7 @@
 
             <!-- Info Grid -->
             <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 text-sm text-gray-800">
-              
+
               <!-- Guest Info -->
               <div class="space-y-1">
                 <p><span class="font-medium">👤 Guest:</span> <%= booking.guestName %></p>
@@ -48,12 +50,23 @@
                 <p><span class="font-medium">🗓️ Check-In:</span> <%= new Date(booking.checkIn).toDateString() %></p>
                 <p><span class="font-medium">🗓️ Check-Out:</span> <%= new Date(booking.checkOut).toDateString() %></p>
               </div>
+
+              <!-- Status -->
+              <% if (booking.isCompleted) { %>
+              <p class="text-sm text-green-700 font-medium flex items-center gap-2">
+                <span class="font-semibold text-gray-800">Status:</span>
+                <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold">✔️ Booking
+                  Completed</span>
+              </p>
+
+              <%}%>
             </div>
           </div>
         </div>
         <% }) %>
-      </div>
-    <% } %>
+            </div>
+            <% } %>
   </section>
 </body>
+
 </html>

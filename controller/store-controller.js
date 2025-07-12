@@ -16,10 +16,12 @@ exports.getIndex = (req, res, next) => {
       user: req.session.user,
     })
   );
-}
+};
 exports.getHome = (req, res, next) => {
   // console.log(req.body)
-  Home.find({isDeleted:false}).then((home) => {
+  Home.find({
+    isDeleted: false,
+  }).then((home) => {
     // console.log(home)
     res.render("store/home-list", {
       homeData: home,
@@ -220,7 +222,17 @@ exports.postHomeBookingConfirmaton = [
       price,
       total,
     } = req.body;
-    const existing = await Booking.exists({ homeName: homeId });
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const existing = await Booking.findOne({
+      homeName: homeId,
+      email: guestEmail,
+      checkOut: {
+        $gte: today,
+      }, // still active
+    });
+
     if (!existing) {
       const booking = new Booking({
         guestName,
@@ -260,6 +272,8 @@ exports.getHomeBooking = async (req, res, next) => {
     guestEmail: req.session.user.email,
   }).populate("homeName");
 
+  // console.log(bookings[0].isCompleted);
+
   res.render("store/booking-list", {
     bookedHomes: user.bookings,
     pageTitle: "Bookings",
@@ -274,15 +288,26 @@ exports.postBookingsCancel = async (req, res, next) => {
   const homeId = req.params.homeId;
   const userId = req.session.user._id;
   const user = await User.findById(userId);
-
   if (user.bookings.includes(homeId)) {
     user.bookings.pull(homeId);
+
     await user.save();
-    Booking.findByIdAndDelete(homeId).then((err) => {
-      if (err) {
-        console.log("error occer in remove home : ", err);
-      }
-    });
+    Booking.find({
+      homeName: homeId,
+      guestEmail: user.email,
+    })
+      .then(async(booking) => {
+        const activeBooking = booking.find((b) => !b.isCompleted);
+        if (activeBooking) {
+          await Booking.findByIdAndDelete(activeBooking._id);
+          console.log("✅ Active booking deleted");
+        } else {
+          console.log("ℹ️ No active booking found");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     res.redirect("/guest/home-booking");
   } else {
     res.redirect("/guest/home-booking");

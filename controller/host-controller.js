@@ -60,7 +60,7 @@ exports.postHomeAdd = [
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log(errors);
+      // console.log(errors);
       const { name, price, location, rating } = req.body;
       return res.status(422).render("host/edit-home", {
         pageTitle: "Home Reg",
@@ -85,8 +85,8 @@ exports.postHomeAdd = [
     if (!req.file) {
       return res.status(422).send("no such file exists");
     }
-    console.log(req.file);
-    console.log(req.body);
+    // console.log(req.file);
+    // console.log(req.body);
     const image = req.file.path;
     const home = new Home({
       name,
@@ -96,7 +96,7 @@ exports.postHomeAdd = [
       image,
       owner: req.session.user._id,
     });
-    console.log(home);
+    // console.log(home);
     home.save().then(() => res.redirect("/host/home-list"));
   },
 ];
@@ -212,8 +212,9 @@ exports.getHomeBooking = async(req, res, next) => {
       match: { owner: userId }, // 💡 only populate homes that match this owner
     })
     .exec();
+    // console.log(bookings)
     //  for case  homename is null or other remove that
-    console.log(bookings);
+    // console.log(bookings);
     const filteredBookings = bookings.filter((b) => b.homeName);
     res.render("host/host-home-booking", {
       bookings: filteredBookings,

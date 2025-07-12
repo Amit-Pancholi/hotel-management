@@ -67,7 +67,7 @@ exports.postLogin = async (req, res, next) => {
   // res.cookie('isLoggedIn', true)
   req.session.isLoggedIn = true;
   req.session.user = user;
-  console.log(req.session.user);
+  // console.log(req.session.user);
   await req.session.save();
   if (user.userType === "guest") {
     return res.redirect("/guest/home-list");
