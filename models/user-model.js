@@ -20,6 +20,16 @@ const userSchema = new mongoose.Schema({
     enum: ["guest", "host"],
     default: "guest",
   },
+  
+  bioData: String,
+ 
+  phoneNumber: String,
+
+  profileImage:{
+    type:String,
+    default:null 
+  },
+
   favourite: [
     {
       type: mongoose.Schema.Types.ObjectId,

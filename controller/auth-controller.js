@@ -92,6 +92,19 @@ exports.postSignUp = [
     .matches(/^[a-zA-Z\s]+$/)
     .withMessage("Last name can only contain letters and spaces"),
 
+  check("bioData"),
+
+  check("phoneNumber")
+    .trim()
+    .notEmpty()
+    .withMessage("Please enter a phone number")
+    .isLength({
+      min: 10,
+      max: 10,
+    })
+    .matches(/^[0-9]+$/)
+    .withMessage("Please enter a valid phone number"),
+
   check("email")
     .isEmail()
     .withMessage("Please enter a valid email")
@@ -141,7 +154,7 @@ exports.postSignUp = [
 
   (req, res, next) => {
     // console.log(req.body)
-    const { firstName, lastName, email, password, userType } = req.body;
+    const { firstName, lastName,bio, phoneNumber, email, password, userType } = req.body;
     const error = validationResult(req);
     if (!error.isEmpty()) {
       return res.status(422).render("auth/sign-up", {
@@ -153,6 +166,8 @@ exports.postSignUp = [
           firstName,
           lastName,
           email,
+          bio,
+          phoneNumber,
           password,
           userType,
         },
@@ -166,6 +181,8 @@ exports.postSignUp = [
           firstName,
           lastName,
           email,
+          bioData:bio,
+          phoneNumber,
           password: hashedPassword,
           userType,
         });
@@ -187,6 +204,8 @@ exports.postSignUp = [
               firstName,
               lastName,
               email,
+              bio,
+              phoneNumber,
               password,
               userType,
             },
@@ -202,6 +221,8 @@ exports.postSignUp = [
               firstName,
               lastName,
               email,
+              bio,
+              phoneNumber,
               password,
               userType,
             },

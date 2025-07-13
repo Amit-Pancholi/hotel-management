@@ -1,75 +1,93 @@
 <nav class="backdrop-blur-md bg-white/60 top-0 w-full z-50">
   <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-    <!-- Brand / Page Title -->
-    <a
-      href="/"
-      class="text-2xl font-extrabold text-blue-700 drop-shadow-sm tracking-wide">
+    <!-- Brand -->
+    <a href="/" class="text-2xl font-extrabold text-blue-700 drop-shadow-sm tracking-wide">
       <%= currentPage %>
     </a>
 
-    <!-- Navigation Links -->
-    <div class="space-x-2 text-sm sm:text-base">
-      <% if (isLoggedIn) { %> <% if(user && user.userType == 'guest') {%>
-      <a
-        href="/guest/home-list"
-        class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Home List' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
-        Home List
-      </a>
-      <a
-        href="/guest/favourites"
-        class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Favourite List' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
-        Favourite
-      </a>
-      <a
-        href="/guest/home-booking"
-        class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Booking' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
-        Booking
-      </a>
+    <div class="space-x-2 text-sm sm:text-base flex items-center">
+      <% if (isLoggedIn && user) { %>
+      <% if (user.userType === 'guest') { %>
+      <a href="/guest/home-list"
+        class="<%= currentPage === 'Home List' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %> px-4 py-2 rounded-lg font-medium transition-all duration-200">Home
+        List</a>
+      <a href="/guest/favourites"
+        class="<%= currentPage === 'Favourite List' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %> px-4 py-2 rounded-lg font-medium transition-all duration-200">Favourite</a>
+      <a href="/guest/home-booking"
+        class="<%= currentPage === 'Booking' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %> px-4 py-2 rounded-lg font-medium transition-all duration-200">Booking</a>
       <% } else { %>
-      <a
-        href="/host/home-add"
-        class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Home Registration' || currentPage === 'Edit Home' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
-        <%= currentPage === 'Edit Home' ? 'Edit Home' : 'Home Reg' %> 
-      </a>
-      <a
-        href="/host/home-list"
-        class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Host Home' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
-        Host Home
-      </a>
-      <a
-        href="/host/home-booking"
-        class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Booking' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
-        Booking
-      </a>
-      <% } %> <% } %>
+      <a href="/host/home-add"
+        class="<%= currentPage === 'Home Registration' || currentPage === 'Edit Home' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %> px-4 py-2 rounded-lg font-medium transition-all duration-200"><%= currentPage === 'Edit Home' ? 'Edit Home' : 'Home Reg' %></a>
+      <a href="/host/home-list"
+        class="<%= currentPage === 'Host Home' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %> px-4 py-2 rounded-lg font-medium transition-all duration-200">Host
+        Home</a>
+      <a href="/host/home-booking"
+        class="<%= currentPage === 'Booking' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %> px-4 py-2 rounded-lg font-medium transition-all duration-200">Booking</a>
+      <% } %>
+      <% } %>
 
-      <a
-        href="/contact/contact-us"
-        class="px-4 py-2 rounded-lg font-medium transition-all duration-200 <%= currentPage === 'Contact Us' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
-        Contact
-      </a>
+      <a href="/contact/contact-us"
+        class="<%= currentPage === 'Contact Us' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %> px-4 py-2 rounded-lg font-medium transition-all duration-200">Contact</a>
 
       <% if (!isLoggedIn) { %>
-      <a
-        href="/login"
-        class="px-4 py-2 rounded-lg border-2 border-blue-500 font-medium transition-all duration-200 <%= currentPage === 'Login' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
-        Login
-      </a>
-      <a
-        href="/signup"
-        class="px-4 py-2 rounded-lg font-medium border-2 border-blue-500 transition-all duration-200 <%= currentPage === 'Sign Up' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %>">
-        Sign Up
-      </a>
+      <a href="/login"
+        class="<%= currentPage === 'Login' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %> px-4 py-2 rounded-lg border-2 border-blue-500 font-medium transition-all duration-200">Login</a>
+      <a href="/signup"
+        class="<%= currentPage === 'Sign Up' ? 'bg-white/70 text-blue-700 backdrop-blur-md shadow-md' : 'text-gray-700 hover:bg-white/40 hover:text-blue-700' %> px-4 py-2 rounded-lg border-2 border-blue-500 font-medium transition-all duration-200">Sign
+        Up</a>
       <% } else { %>
-      <form action="/logout" method="post" class="inline">
-        <button
-          type="submit"
-          class="px-4 py-2 rounded-lg font-medium border-2 border-blue-500 text-gray-700 hover:bg-white/40 hover:text-red-600 transition-all duration-200">
-          Log Out
+
+      <!-- Profile Dropdown -->
+      <div class="relative ml-2">
+        <button onclick="toggleProfile()"
+          class="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-indigo-600">
+          <img src="<%= user.profileImage || '/default-avatar.png' %>" class="w-8 h-8 rounded-full border shadow" />
+          <span><%= user.firstName %></span>
         </button>
-      </form>
+
+        <!-- Dropdown Card -->
+        <div id="profileCard" class="hidden absolute right-0 mt-2 w-64 bg-white shadow-xl rounded-lg border z-50">
+          <div class="text-center p-4">
+            <img src="<%= user.profileImage || '/default-avatar.png' %>" class="w-16 h-16 rounded-full mx-auto mb-2" />
+            <h4 class="text-base font-semibold text-gray-800"><%= user.firstName + ' ' + user.lastName %></h4>
+            <p class="text-xs text-gray-500"><%= user.email %></p>
+            <p class="text-xs text-gray-500">Role: <%= user.userType === 'guest' ? 'Guest' : 'Owner' %></p>
+          </div>
+          <div class="border-t px-4 py-2 space-y-2">
+            <a href="/profile"
+              class="w-full inline-block text-center bg-indigo-50 text-indigo-700 font-medium text-sm px-4 py-2 rounded-md hover:bg-indigo-100 transition">
+              👤 View Profile
+            </a>
+            <a href="/profile/edit"
+              class="w-full inline-block text-center bg-indigo-600 text-white font-medium text-sm px-4 py-2 rounded-md hover:bg-indigo-700 transition">
+              ✏️ Edit Profile
+            </a>
+            <form action="/logout" method="POST">
+              <button type="submit"
+                class="w-full text-center bg-red-100 text-red-600 font-medium text-sm px-4 py-2 rounded-md hover:bg-red-200 transition">
+                Logout
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
       <% } %>
-      
     </div>
   </div>
+
+  <!-- JS -->
+  <script>
+    function toggleProfile() {
+      document.getElementById("profileCard").classList.toggle("hidden");
+    }
+
+    document.addEventListener("click", (e) => {
+      const card = document.getElementById("profileCard");
+      const toggleBtn = e.target.closest("button[onclick='toggleProfile()']");
+      if (!toggleBtn && card && !card.contains(e.target)) {
+        card.classList.add("hidden");
+      }
+    });
+  </script>
 </nav>
