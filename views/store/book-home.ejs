@@ -2,70 +2,76 @@
 </head>
 
 <body class="bg-gradient-to-br from-blue-100 to-indigo-100 min-h-screen">
-  <!-- 🌐 Navbar -->
   <%- include('../partials/nav') %>
-  <div class="flex items-center justify-center min-h-[90vh]">
+
+  <div class="flex items-center justify-center min-h-[90vh] px-4">
     <form action="/guest/home-booking-confirmation/<%= home._id %>" method="POST"
-      class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-lg space-y-6" oninput="calculateTotal()">
-      <!-- Error Message -->
+      class="bg-white/80 backdrop-blur-xl border border-gray-200 p-8 rounded-2xl shadow-2xl w-full max-w-lg space-y-6"
+      oninput="calculateTotal()">
+
       <%- include('../partials/error') %>
+
       <h1 class="text-3xl font-bold text-center text-indigo-700">Book Your Stay</h1>
 
+      <!-- Guest Name -->
       <div>
         <label class="block text-sm font-medium text-gray-700">Guest Name</label>
         <input type="text" name="guestName" required value="<%= user.firstName + ' ' + user.lastName %>"
-          class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+          class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
       </div>
 
+      <!-- Guest Email -->
       <div>
         <label class="block text-sm font-medium text-gray-700">Guest Email</label>
         <input type="email" name="guestEmail" required value="<%= user.email %>" readonly
-          class=" mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+          class="mt-1 w-full px-4 py-2 border rounded-lg bg-gray-100 text-gray-600 shadow-sm" />
       </div>
 
+      <!-- Guest Phone -->
       <div>
         <label class="block text-sm font-medium text-gray-700">Guest Phone</label>
-        <input type="tel" name="guestPhone" required value="<%= user.phoneNumber? user.phoneNumber : '' %>"
-          class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+        <input type="tel" name="guestPhone" required value="<%= user.phoneNumber || '' %>"
+          class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
       </div>
 
+      <!-- Check-In -->
       <div>
         <label class="block text-sm font-medium text-gray-700">Check-in Date</label>
         <input type="date" name="checkIn" id="checkIn" required
-          class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+          class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
       </div>
 
+      <!-- Check-Out -->
       <div>
         <label class="block text-sm font-medium text-gray-700">Check-out Date</label>
         <input type="date" name="checkOut" id="checkOut" required
-          class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+          class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" />
       </div>
 
+      <!-- Price per Night -->
       <div>
         <label class="block text-sm font-medium text-gray-700">Price (per night)</label>
-        <input type="number" name="price" id="price" required min="0" value="<%= home.price %>" readonly
-          class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+        <input type="number" name="price" id="price" value="<%= home.price %>" readonly
+          class="mt-1 w-full px-4 py-2 border rounded-lg bg-gray-100 text-gray-600 shadow-sm" />
       </div>
 
+      <!-- Total Price -->
       <div>
-        <label class="block text-sm font-medium text-gray-700">Total (calculated)</label>
-        <input type="number" name="total" id="total" readonly value="<%= total? total : '' %>"
-          class="mt-1 w-full px-4 py-2 border rounded-lg shadow-sm bg-gray-100 text-gray-700">
+        <label class="block text-sm font-medium text-gray-700">Total Price</label>
+        <input type="number" name="total" id="total" value="<%= total || '' %>" readonly
+          class="mt-1 w-full px-4 py-2 border rounded-lg bg-gray-100 text-gray-700 shadow-sm" />
       </div>
 
-      <!-- Hidden or select dropdown for home -->
-      <!-- Option 1: Hidden if you already know homeId -->
-      <input type="hidden" name="homeName" value="<%= home._id %>">
+      <!-- Home ID (hidden) -->
+      <input type="hidden" name="homeName" value="<%= home._id %>" />
 
-
-
+      <!-- Submit -->
       <button type="submit"
         class="w-full py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition">
-        Book Now
+        📩 Book Now
       </button>
     </form>
   </div>
-
 
   <script>
     function calculateTotal() {
@@ -79,7 +85,5 @@
       document.getElementById("total").value = total.toFixed(2);
     }
   </script>
-
 </body>
-
 </html>

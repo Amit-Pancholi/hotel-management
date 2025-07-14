@@ -16,6 +16,8 @@ const { error404 } = require("./controller/error-controller");
 const { authRoute } = require("./routes/auth-routes");
 const contactUsRoute = require("./routes/contactUs-routes");
 const Home = require("./models/home-model");
+const profileRoute = require("./routes/profile-routes");
+
 
 const PORT = process.env.PORT || 3000;
 const mongoUrl = process.env.MONGO_URL || 'mongodb+srv://testuser:Aq12345@cluster0.tveeyja.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
@@ -101,7 +103,7 @@ app.use(authRoute);
 app.use('/guest',isAuthenticated, isGuest, storeRoute);
 app.use('/contact',isAuthenticated, contactUsRoute);
 app.use("/host", isAuthenticated, isHost, hostRoute);
-
+app.use("/profile", isAuthenticated, profileRoute);
 
 // app.use("/host", (req, res, next) => {
 //   if (req.session.isLoggedIn) {

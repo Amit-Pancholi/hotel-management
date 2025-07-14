@@ -38,19 +38,18 @@
       <% } else { %>
 
       <!-- Profile Dropdown -->
-      <div class="relative ml-2">
+      <div class="relative ml-2 z-50">
         <button onclick="toggleProfile()"
           class="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-indigo-600">
-          <img src="<%= user.profileImage || '/default-avatar.png' %>" class="w-8 h-8 rounded-full border shadow" />
+          <img src="<%= user.profileImage || 'https://res.cloudinary.com/df67sajk5/image/upload/v1752504317/405980_rkvcau.jpg' %>" class="w-8 h-8 rounded-full border shadow" />
           <span><%= user.firstName %></span>
         </button>
 
         <!-- Dropdown Card -->
         <div id="profileCard" class="hidden absolute right-0 mt-2 w-64 bg-white shadow-xl rounded-lg border z-50">
           <div class="text-center p-4">
-            <img src="<%= user.profileImage || '/default-avatar.png' %>" class="w-16 h-16 rounded-full mx-auto mb-2" />
+            <img src="<%= user.profileImage || 'https://res.cloudinary.com/df67sajk5/image/upload/v1752504317/405980_rkvcau.jpg' %>" class="w-16 h-16 rounded-full mx-auto mb-2" />
             <h4 class="text-base font-semibold text-gray-800"><%= user.firstName + ' ' + user.lastName %></h4>
-            <p class="text-xs text-gray-500"><%= user.email %></p>
             <p class="text-xs text-gray-500">Role: <%= user.userType === 'guest' ? 'Guest' : 'Owner' %></p>
           </div>
           <div class="border-t px-4 py-2 space-y-2">

@@ -4,49 +4,55 @@
 <body class="bg-gradient-to-br from-blue-300 via-white to-indigo-300 min-h-screen">
   <%- include('../partials/nav')%>
 
-  <div class="flex items-center justify-center min-h-[90vh]">
+  <div class="flex items-center justify-center min-h-[90vh] px-4">
     <form action="/host/<%= editing ? 'edit-home' : 'home-list' %>" method="POST" enctype="multipart/form-data"
-      class="w-full max-w-md bg-white/40 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-white/30">
-      <!-- Error Message -->
-      <%- include('../partials/error') %>
-      <h1 class="text-3xl font-extrabold text-center text-blue-800 mb-6 tracking-wide drop-shadow-md">
-        <%= editing ? 'Edit Home' : 'Add New Home' %>
-      </h1>
+      class="w-full max-w-md bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-200">
+      
+      <!-- Banner -->
+      <div class="bg-gradient-to-r from-indigo-600 to-blue-600 py-5 text-white text-center shadow">
+        <h1 class="text-xl font-bold tracking-wide">
+          <%= editing ? '✏️ Edit Home' : '🏠 Add New Home' %>
+        </h1>
+      </div>
 
-      <input type="hidden" name="id" value="<%= editing ? home._id : '' %>">
+      <div class="px-8 py-8 bg-white/80 backdrop-blur-md">
+        <%- include('../partials/error') %>
 
-      <!-- Form Fields Except Image -->
-      <% const fields = [
-        { name: "name", label: "Home Title" },
-        { name: "price", label: "Price" },
-        { name: "location", label: "Location" },
-        { name: "rating", label: "Rating" }
-      ]; %>
+        <input type="hidden" name="id" value="<%= editing ? home._id : '' %>">
 
-      <% fields.forEach(field => { %>
-      <label class="block mb-4">
-        <span class="text-gray-800 font-semibold"><%= field.label %></span>
-        <input type="text" name="<%= field.name %>" value="<%= editing ? home[field.name] : (home[field.name]? home[field.name] :'') %>" required
-          class="mt-1 block w-full px-4 py-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition duration-200 bg-white/70" />
-      </label>
-      <% }); %>
+        <% const fields = [
+          { name: "name", label: "Home Title" },
+          { name: "price", label: "Price" },
+          { name: "location", label: "Location" },
+          { name: "rating", label: "Rating" }
+        ]; %>
 
-      <!-- Image File Picker -->
-      <label class="block mb-4">
-        <span class="text-gray-800 font-semibold">Home Image</span>
-        <input type="file" name="image" accept="image/*" class="mt-1 block w-full px-4 py-2 text-sm file:mr-4 file:py-2 file:px-4
-                 file:rounded-full file:border-0 file:text-sm file:font-semibold
-                 file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100
-                 transition duration-200 bg-white/70 border border-gray-300 rounded-lg shadow-sm" />
-      </label>
+        <% fields.forEach(field => { %>
+          <label class="block mb-4">
+            <span class="text-gray-800 font-semibold"><%= field.label %></span>
+            <input type="text" name="<%= field.name %>"
+              value="<%= editing ? home[field.name] : (home[field.name] || '') %>" required
+              class="mt-1 block w-full px-4 py-2 text-sm border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white" />
+          </label>
+        <% }) %>
 
-      <!-- Submit Button -->
-      <button type="submit"
-        class="mt-4 w-full py-3 text-white text-sm font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-lg shadow-lg transition duration-300">
-        <%= editing ? 'Update Home' : 'Add Home' %>
-      </button>
+        <!-- Image Picker -->
+        <label class="block mb-6">
+          <span class="text-gray-800 font-semibold">Home Image</span>
+          <input type="file" name="image" accept="image/*"
+            class="mt-1 block w-full text-sm text-gray-700
+                   file:mr-4 file:py-2 file:px-4 file:rounded-full
+                   file:border-0 file:bg-indigo-50 file:text-indigo-700
+                   hover:file:bg-indigo-100 transition cursor-pointer border border-gray-300 rounded-lg" />
+        </label>
+
+        <!-- Submit Button -->
+        <button type="submit"
+          class="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-indigo-700 shadow-md transition">
+          <%= editing ? 'Update Home' : 'Add Home' %>
+        </button>
+      </div>
     </form>
   </div>
 </body>
-
 </html>

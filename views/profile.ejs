@@ -1,0 +1,45 @@
+<%- include('./partials/head') %>
+</head>
+<body class="bg-gradient-to-tr from-blue-100 to-purple-200 min-h-screen text-gray-800">
+  <%- include('./partials/nav') %>
+
+  <section class="max-w-md mx-auto mt-24 bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-200">
+    <!-- Banner -->
+    <div class="bg-gradient-to-r from-indigo-500 to-purple-500 h-24"></div>
+
+    <!-- Profile Info -->
+    <div class="relative -mt-14 text-center px-6 pb-8">
+      <img src="<%= user.profileImage || 'https://res.cloudinary.com/df67sajk5/image/upload/v1752504317/405980_rkvcau.jpg' %>"
+           class="w-28 h-28 rounded-full border-4 border-white mx-auto shadow-md" />
+      <h2 class="text-xl font-bold mt-4 text-gray-800"><%= user.firstName + ' ' + user.lastName %></h2>
+      <span class="text-sm font-medium text-white bg-indigo-500 px-3 py-1 rounded-full mt-2 inline-block capitalize shadow">
+        <%= user.userType === 'host' ? 'Owner' : 'Guest' %>
+      </span>
+    </div>
+
+    <!-- User Details -->
+    <div class="px-6 pb-6 text-[15px] divide-y divide-gray-200">
+      <div class="py-3 flex justify-between">
+        <span class="font-semibold text-gray-600">Email</span>
+        <span class="text-gray-800 text-right"><%= user.email %></span>
+      </div>
+      <div class="py-3 flex justify-between">
+        <span class="font-semibold text-gray-600">Phone</span>
+        <span class="text-gray-800 text-right"><%= user.phoneNumber || 'N/A' %></span>
+      </div>
+      <div class="py-3">
+        <span class="font-semibold text-gray-600 block mb-1">Bio</span>
+        <p class="text-gray-700 leading-relaxed"><%= user.bioData || 'N/A' %></p>
+      </div>
+    </div>
+
+    <!-- Edit Button -->
+    <div class="px-6 pb-6 text-center">
+      <a href="/profile/edit"
+         class="inline-block bg-indigo-600 text-white px-6 py-2 rounded-md font-medium hover:bg-indigo-700 transition">
+        ✏️ Edit Profile
+      </a>
+    </div>
+  </section>
+</body>
+</html>

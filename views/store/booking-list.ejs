@@ -1,13 +1,14 @@
 <%- include('../partials/head') %>
 </head>
 
-<body class="bg-gradient-to-tr from-green-100 via-white to-blue-100 text-gray-800 min-h-screen">
+<body class="bg-gradient-to-tr from-green-100 via-white to-blue-100 text-gray-800 min-h-screen relative z-0">
   <!-- 🌐 Navbar -->
   <%- include('../partials/nav') %>
 
-  <section class="max-w-6xl mx-auto px-4 py-12 mt-20">
-    <h2 class="text-3xl font-extrabold text-center text-indigo-800 mb-10 tracking-tight drop-shadow-sm">🛏️ Your
-      Bookings</h2>
+  <section class="max-w-6xl mx-auto px-4 py-16 pt-24">
+    <h2 class="text-3xl font-extrabold text-center text-indigo-800 mb-12 drop-shadow-sm">
+      🛏️ Your Bookings
+    </h2>
 
     <% if (bookedHomes.length === 0) { %>
     <p class="text-center text-gray-600 text-lg">You haven't booked any homes yet.</p>
@@ -17,12 +18,14 @@
              const home = booking.homeName;
         %>
       <div
-        class="bg-white/70 backdrop-blur-md border border-gray-200 rounded-2xl shadow-md overflow-hidden transform transition-all hover:scale-[1.02] duration-300">
-        <img src="<%= home.image %>" alt="<%= home.name %>" class="w-full h-48 object-cover">
+        class="bg-white/80 backdrop-blur-lg border border-gray-200 rounded-2xl shadow-xl overflow-hidden transform transition-all hover:scale-[1.015] duration-300 relative z-10">
+        <!-- 🖼️ Image -->
+        <img src="<%= home.image %>" alt="<%= home.name %>" class="w-full h-48 object-cover" />
 
+        <!-- 📋 Details -->
         <div class="p-6 space-y-3">
-          <h3 class="text-xl font-bold text-indigo-700"><%= home.name %></h3>
-          <p class="text-sm text-gray-500 italic">Booked by: <%= booking.guestName %></p>
+          <h3 class="text-xl font-bold text-indigo-700 truncate"><%= home.name %></h3>
+          <p class="text-sm text-gray-500 italic"> Booked by: <%= booking.guestName %></p>
 
           <div class="text-sm text-gray-700 space-y-1">
             <p><span class="font-semibold">Location:</span> <%= home.location %></p>
@@ -33,31 +36,26 @@
             <p><span class="font-semibold">Check-Out:</span> <%= new Date(booking.checkOut).toDateString() %></p>
           </div>
 
+          <!-- ✅ Status or ❌ Cancel Button -->
           <div class="mt-4 flex justify-between items-center">
             <% if (booking?.isCompleted) { %>
-            <p class="text-sm text-green-700 font-medium flex items-center gap-2">
-              <span class="font-semibold text-gray-800">Status:</span>
-              <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold">✔️ Booking
-                Completed</span>
-            </p>
-
-            <%} else { %>
+            <span class="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">
+              ✔️ Booking Completed
+            </span>
+            <% } else { %>
             <form action="/guest/bookings-cancel/<%= booking.homeName._id %>" method="POST">
               <button type="submit"
-                class="bg-red-400 text-white text-xs px-4 py-2 rounded-md hover:bg-red-500 transition">
+                class="bg-red-500 text-white text-xs px-4 py-2 rounded-md hover:bg-red-600 transition">
                 ❌ Cancel
               </button>
             </form>
-            <%}%>
-              
-
-            
+            <% } %>
           </div>
         </div>
       </div>
       <% }) %>
-          </div>
-          <% } %>
+    </div>
+    <% } %>
   </section>
 </body>
 
