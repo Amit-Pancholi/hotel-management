@@ -74,7 +74,7 @@ function isGuest(req, res, next) {
   if (req.session.user?.userType === "guest") {
     return next();
   }
-  return res.redirect("/sign-up"); // or send 403
+  return res.redirect("/signup"); // or send 403
 }
 
 function isHost(req, res, next) {
@@ -82,7 +82,7 @@ function isHost(req, res, next) {
     return next();
   }
   // console.log('from isHost',req.session.user);
-  return res.redirect("/sign-up"); // or send 403
+  return res.redirect("/signup"); // or send 403
 }
 
 
