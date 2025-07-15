@@ -1,6 +1,6 @@
 const { check, validationResult } = require("express-validator");
 const Home = require("../models/home-model");
-const Booking = require('../models/booking-models'); // adjust path if needed  
+const Booking = require("../models/booking-models"); // adjust path if needed
 
 exports.getHomeAdd = (req, res, next) => {
   res.render("host/edit-home", {
@@ -9,7 +9,7 @@ exports.getHomeAdd = (req, res, next) => {
     editing: false,
     isLoggedIn: req.session.isLoggedIn,
     user: req.session.user,
-    home:{}
+    home: {},
   });
 };
 
@@ -35,13 +35,15 @@ exports.postHomeAdd = [
       min: 2,
     })
     .matches(/^[a-zA-Z\s]+$/)
-    .withMessage("Please enter a valid name"),
+    .withMessage(
+      "Please enter a valid name.name can only contain letters and spaces"
+    ),
   check("price")
     .trim()
     .notEmpty()
     .withMessage("Please enter a price")
     .matches(/^[0-9]+$/)
-    .withMessage("Please enter a valid price"),
+    .withMessage("Please enter a valid price.price can only contain numbers"),
   check("location")
     .trim()
     .notEmpty()
@@ -110,13 +112,15 @@ exports.postEditHome = [
       min: 2,
     })
     .matches(/^[a-zA-Z\s]+$/)
-    .withMessage("Please enter a valid name"),
+    .withMessage(
+      "Please enter a valid name.name can only contain letters and spaces"
+    ),
   check("price")
     .trim()
     .notEmpty()
     .withMessage("Please enter a price")
     .matches(/^[0-9]+$/)
-    .withMessage("Please enter a valid price"),
+    .withMessage("Please enter a valid price.price can only contain numbers"),
 
   check("location")
     .trim()
@@ -133,7 +137,7 @@ exports.postEditHome = [
     .notEmpty()
     .withMessage("Please enter a rating")
     .isFloat({ min: 0, max: 5 })
-    .withMessage("Please enter a valid rating"),
+    .withMessage("Please enter a valid rating between 0-5"),
 
   (req, res, next) => {
     const errors = validationResult(req);
@@ -177,8 +181,7 @@ exports.postEditHome = [
 exports.postRemoveHome = (req, res, next) => {
   const homeId = req.params.homeId;
 
-  
-  Home.findByIdAndUpdate(homeId,{isDeleted:true}).then((err) => {
+  Home.findByIdAndUpdate(homeId, { isDeleted: true }).then((err) => {
     if (err) {
       console.log("error occer in remove home : ", err);
     }
@@ -203,7 +206,7 @@ exports.getEditHome = (req, res, next) => {
     });
   });
 };
-exports.getHomeBooking = async(req, res, next) => {
+exports.getHomeBooking = async (req, res, next) => {
   const userId = req.session.user._id; // Or passed as a route param/query
 
   const bookings = await Booking.find({})
@@ -212,15 +215,15 @@ exports.getHomeBooking = async(req, res, next) => {
       match: { owner: userId }, // 💡 only populate homes that match this owner
     })
     .exec();
-    // console.log(bookings)
-    //  for case  homename is null or other remove that
-    // console.log(bookings);
-    const filteredBookings = bookings.filter((b) => b.homeName);
-    res.render("host/host-home-booking", {
-      bookings: filteredBookings,
-      pageTitle: "Bookings",
-      currentPage: "Booking",
-      isLoggedIn: req.session.isLoggedIn,
-      user: req.session.user,
-    });
-}
+  // console.log(bookings)
+  //  for case  homename is null or other remove that
+  // console.log(bookings);
+  const filteredBookings = bookings.filter((b) => b.homeName);
+  res.render("host/host-home-booking", {
+    bookings: filteredBookings,
+    pageTitle: "Bookings",
+    currentPage: "Booking",
+    isLoggedIn: req.session.isLoggedIn,
+    user: req.session.user,
+  });
+};

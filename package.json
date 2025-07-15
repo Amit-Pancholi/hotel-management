@@ -9,7 +9,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tailwind": "npx tailwindcss -i ./src/input.css -o ./public/style.css --watch",
-    "start": "concurrently \"nodemon app.js\" \"npm run tailwind\""
+    "start": "node app.js",
+    "dev": "concurrently \"nodemon app.js\" \"npm run tailwind\""
+
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.10",

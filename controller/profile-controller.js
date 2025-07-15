@@ -65,6 +65,7 @@ exports.postProfileEdit = [
       min: 10,
       max: 10,
     })
+    .withMessage("Please enter a valid phone number")
     .matches(/^[0-9]+$/)
     .withMessage("Please enter a valid phone number"),
   (req, res, next) => {
